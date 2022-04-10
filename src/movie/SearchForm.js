@@ -1,24 +1,17 @@
 import React, {useState,useEffect } from 'react'
 import './movie.css'
+import axios from 'axios'
+import { useGlobalContext } from './context'
 
-export default function SearchForm({setMoviesList}) {
-    const [movieSearch,setMovieSearch] = useState("batman");
+export default function SearchForm() {
+    const {query, setQuery} = useGlobalContext()
     const handleChange = (e) => {
-        setMovieSearch(e.target.value)
+        setQuery(e.target.value);
     }
-
-    const fetchMovie = async (searchTerm) => {
-        const result = await (await fetch(`${React_App_MOVIE_URL}?t=${searchTerm}&apikey=${React_App_API_KEY}`)).json()
-        setMoviesList([result])
-    }
-    useEffect(() => {
-        fetchMovie(movieSearch)
-    },[movieSearch])
-
 
   return (
         <div className="searchFormContainer">
-             <input className="searchForm" value={movieSearch} onChange={handleChange} />
+             <input className="searchForm" value={query} onChange={handleChange} />
         </div>
   )
 }
